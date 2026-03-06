@@ -1,0 +1,6 @@
+[package]
+name = "kata02_KarateChop"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
