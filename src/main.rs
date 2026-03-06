@@ -58,6 +58,24 @@ fn functional_bs (arr: &[isize], target: isize) -> isize {
     }
 }
 
+use std::cmp::Ordering::{
+    Equal,
+    Greater,
+    Less
+};
+
+#[allow(dead_code)]
+fn functional_recursive_bs(arr: &[i32], target: i32, offset: usize) -> isize {
+    if arr.is_empty() {
+        return -1;
+    }
+    let mid = arr.len() / 2;
+    match arr[mid].cmp(&target) {
+        Equal => (offset + mid) as isize,
+        Greater => functional_recursive_bs(&arr[..mid], target, offset),
+        Less => functional_recursive_bs(&arr[mid+1..], target, offset + mid + 1),
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -97,5 +115,17 @@ mod tests {
     fn test_functional_bs_not_found() {
         let test_arr = [1, 2, 3, 4, 5, 6, 7];
         assert_eq!(functional_bs(&test_arr, 9), -1);
+    }
+
+    #[test]
+    fn test_functional_recursive_bs_found() {
+        let test_arr = [1, 2, 3, 4, 5, 6, 7, 8];
+        assert_eq!(functional_recursive_bs(&test_arr, 1, 0), 0);
+    }
+
+    #[test]
+    fn test_functional_recursive_bs_not_found() {
+        let test_arr = [1, 2, 3, 4, 5, 6, 7];
+        assert_eq!(functional_recursive_bs(&test_arr, 9, 0), -1);
     }
 }
