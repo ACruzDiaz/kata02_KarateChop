@@ -50,6 +50,13 @@ fn recursive_bs(arr: &[isize], target: isize) -> isize {
     }
 }
 
+#[allow(dead_code)]
+fn functional_bs (arr: &[isize], target: isize) -> isize {
+    match arr.binary_search(&target){
+        Ok(x) => x as isize,
+        Err(_) => -1, 
+    }
+}
 
 
 #[cfg(test)]
@@ -78,5 +85,17 @@ mod tests {
     fn test_recursive_bs_not_found() {
         let test_arr = [1, 2, 3, 4, 5, 6, 7];
         assert_eq!(recursive_bs(&test_arr, 9), -1);
+    }
+
+    #[test]
+    fn test_functional_bs_found() {
+        let test_arr = [1, 2, 3, 4, 5, 6, 7, 8];
+        assert_eq!(functional_bs(&test_arr, 1), 0);
+    }
+
+    #[test]
+    fn test_functional_bs_not_found() {
+        let test_arr = [1, 2, 3, 4, 5, 6, 7];
+        assert_eq!(functional_bs(&test_arr, 9), -1);
     }
 }
